@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Happy Birthday 🎉</title>
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box;font-family:Arial, Helvetica, sans-serif;}
+    body{
+      height:100vh;
+      display:flex;
+      justify-content:center;
+      align-items:center;
+      background: linear-gradient(135deg,#ff7eb3,#ff758c,#ffd86f);
+      overflow:hidden;
+      color:white;
+      text-align:center;
+    }
+    .card{
+      width:90%;
+      max-width:420px;
+      background: rgba(255,255,255,0.15);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(255,255,255,0.25);
+      padding:25px;
+      border-radius:20px;
+      box-shadow:0 10px 30px rgba(0,0,0,0.25);
+      z-index:2;
+    }
+    h1{
+      font-size:28px;
+      margin-bottom:10px;
+      animation: pop 1.2s ease infinite alternate;
+    }
+    p{
+      font-size:16px;
+      line-height:1.5;
+      margin-bottom:20px;
+    }
+    button{
+      padding:12px 18px;
+      border:none;
+      border-radius:14px;
+      background:#fff;
+      color:#ff3b7a;
+      font-weight:bold;
+      font-size:16px;
+      cursor:pointer;
+      transition:0.2s;
+    }
+    button:hover{
+      transform:scale(1.05);
+    }
+    .hidden{
+      display:none;
+    }
+
+    @keyframes pop{
+      from{transform:scale(1);}
+      to{transform:scale(1.07);}
+    }
+
+    /* confetti */
+    .confetti{
+      position:absolute;
+      width:10px;
+      height:14px;
+      top:-20px;
+      opacity:0.9;
+      border-radius:3px;
+      animation: fall linear forwards;
+      z-index:1;
+    }
+    @keyframes fall{
+      to{
+        transform: translateY(120vh) rotate(360deg);
+        opacity:1;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>🎂 Happy Birthday!</h1>
+
+    <p id="msg">
+      Klik tombol di bawah ya 😄
+    </p>
+
+    <button id="btn">Buka Ucapan 🎉</button>
+  </div>
+
+  <!-- Musik (boleh ganti) -->
+  <audio id="music" loop>
+    <source src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const btn = document.getElementById("btn");
+    const msg = document.getElementById("msg");
+    const music = document.getElementById("music");
+
+    btn.addEventListener("click", () => {
+      msg.innerHTML = `
+        🥳 Selamat ulang tahun ya!<br><br>
+        Semoga sehat selalu, panjang umur,<br>
+        makin bahagia, dan semua impianmu tercapai 💖<br><br>
+        🎁✨ Kamu orang hebat!
+      `;
+      btn.innerText = "Yay! 🎊";
+      btn.disabled = true;
+
+      music.play().catch(()=>{});
+
+      // confetti
+      for(let i=0;i<120;i++){
+        createConfetti();
+      }
+    });
+
+    function createConfetti(){
+      const confetti = document.createElement("div");
+      confetti.classList.add("confetti");
+
+      const colors = ["#fff","#ffeb3b","#00e5ff","#ff4081","#7c4dff","#00c853"];
+      confetti.style.background = colors[Math.floor(Math.random()*colors.length)];
+
+      confetti.style.left = Math.random()*100 + "vw";
+      confetti.style.animationDuration = (Math.random()*2 + 2) + "s";
+      confetti.style.width = (Math.random()*8 + 6) + "px";
+      confetti.style.height = (Math.random()*12 + 8) + "px";
+
+      document.body.appendChild(confetti);
+
+      setTimeout(() => confetti.remove(), 5000);
+    }
+  </script>
+
+</body>
+</html>
